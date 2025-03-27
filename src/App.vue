@@ -1,15 +1,14 @@
 <template>
   <v-app>
     <div
-      class="min-h-screen w-full flex flex-col items-center relative overflow-hidden bg-gradient-to-br from-pink-300 via-red-200 to-purple-300 animate-bg px-4"
+      class="min-h-screen pb-10 w-full flex flex-col items-center relative overflow-hidden bg-gradient-to-br from-pink-300 via-red-200 to-purple-300 animate-bg px-4"
     >
       <!-- Conteúdo -->
       <div class="text-center text-white mt-32 animate-fadeIn">
         <h1 class="text-7xl font-vibes drop-shadow-lg mb-4">Garbson & Ana</h1>
         <p class="text-2xl max-w-2xl mx-auto mb-12 drop-shadow-sm leading-relaxed">
-          Deixe uma lembrança especial para o nosso grande dia! Pode ser uma foto
-          divertida, um vídeo com carinho ou apenas um sorriso sincero. Vamos guardar cada
-          gesto com o coração cheio de amor 💕✨
+          Deixe uma lembrança especial para o nosso grande dia! Vamos guardar cada gesto
+          com o coração cheio de amor 💕✨
         </p>
 
         <!-- Botões -->
