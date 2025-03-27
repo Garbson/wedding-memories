@@ -58,7 +58,7 @@
           @click.self="dialog = false"
         >
           <div
-            class="bg-gradient-to-br from-purple-500 via-pink-400 to-red-300 p-6 rounded-lg shadow-2xl max-w-sm w-full text-center animate-bouquet"
+            class="bg-gradient-to-br mx-2 from-purple-500 via-pink-400 to-red-300 p-6 rounded-lg shadow-2xl max-w-sm w-full text-center animate-bouquet"
           >
             <img
               v-if="uploadType === 'image'"
