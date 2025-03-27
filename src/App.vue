@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <div
-      class="h-screen pb-10 w-full flex align-middle flex-col overflow-y-auto justify-center items-center relative bg-gradient-to-br from-pink-300 via-red-200 to-purple-300 animate-bg px-4"
+      class="h-screen pb-10 w-full flex align-middle flex-col overflow-y-auto justify-center items-center relative bg-gradient-to-br from-pink-200 via-red-300 to-purple-300 animate-bg px-4"
     >
       <!-- Conteúdo -->
       <div class="text-center text-white animate-fadeIn">
@@ -49,6 +49,13 @@
             class="hidden"
             @change="handleUpload"
           />
+        </div>
+
+        <div v-if="loading" class="mt-6 animate-fadeIn">
+          <div
+            class="w-16 h-16 border-4 border-white border-dashed rounded-full animate-spin mx-auto"
+          ></div>
+          <p class="text-white mt-2 font-medium">Enviando sua lembrança...</p>
         </div>
 
         <!-- Modal de Preview -->
@@ -249,45 +256,6 @@ const handleUpload = async (e: Event) => {
 
 .delay-300 {
   animation-delay: 0.3s;
-}
-
-/* Confetes */
-.confetti-container {
-  position: absolute;
-  top: -10px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-.confetti {
-  position: absolute;
-  top: -10px;
-  width: 10px;
-  height: 10px;
-  background-color: var(--tw-confetti-color);
-  opacity: 0.8;
-  animation: fall linear infinite, sway ease-in-out infinite;
-}
-
-.confetti:nth-child(5n + 1) {
-  --tw-confetti-color: #ff6b6b;
-}
-
-.confetti:nth-child(5n + 2) {
-  --tw-confetti-color: #ffd93d;
-}
-
-.confetti:nth-child(5n + 3) {
-  --tw-confetti-color: #6bcb77;
-}
-
-.confetti:nth-child(5n + 4) {
-  --tw-confetti-color: #4d96ff;
-}
-
-.confetti:nth-child(5n + 5) {
-  --tw-confetti-color: #ff6ec7;
 }
 
 @keyframes fall {
