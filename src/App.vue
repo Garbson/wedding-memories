@@ -1,14 +1,19 @@
 <template>
   <v-app>
     <div
-      class="min-h-screen pb-10 w-full flex flex-col items-center relative overflow-hidden bg-gradient-to-br from-pink-300 via-red-200 to-purple-300 animate-bg px-4"
+      class="h-screen pb-10 w-full flex align-middle flex-col overflow-y-auto justify-center items-center relative bg-gradient-to-br from-pink-300 via-red-200 to-purple-300 animate-bg px-4"
     >
       <!-- Conteúdo -->
-      <div class="text-center text-white mt-32 animate-fadeIn">
-        <h1 class="text-7xl font-vibes drop-shadow-lg mb-4">Garbson & Ana</h1>
-        <p class="text-2xl max-w-2xl mx-auto mb-12 drop-shadow-sm leading-relaxed">
-          Deixe uma lembrança especial para o nosso grande dia! Vamos guardar cada gesto
-          com o coração cheio de amor 💕✨
+      <div class="text-center text-white animate-fadeIn">
+        <p
+          class="text-6xl titulo font-vibes bg-gradient-to-r from-blue-500 via-purple-400 to-pink-400 text-transparent bg-clip-text drop-shadow-lg"
+        >
+          Garbson & Ana
+        </p>
+        <p class="text-1xl max-w-2xl mx-auto mb-12 drop-shadow-sm leading-relaxed">
+          Deixe uma lembrança especial para o nosso grande dia! Pode ser uma foto
+          divertida, um vídeo com carinho ou apenas um sorriso sincero. Vamos guardar cada
+          gesto com o coração cheio de amor 💕✨
         </p>
 
         <!-- Botões -->
@@ -18,7 +23,7 @@
           <button
             @click="selectFile('image')"
             :disabled="loading"
-            class="bg-white text-pink-500 hover:bg-pink-500 hover:text-white transition duration-300 px-8 py-3 rounded-full shadow-xl font-semibold flex items-center gap-2"
+            class="bg-white text-pink-500 hover:bg-pink-500 hover:text-white transition duration-300 px-8 py-3 rounded-full font-semibold flex items-center gap-2"
           >
             <v-icon icon="mdi-camera" />
             {{ loading && uploadType === "image" ? "Enviando..." : "Enviar Foto" }}
@@ -29,7 +34,7 @@
           <button
             @click="selectFile('video')"
             :disabled="loading"
-            class="bg-white text-indigo-500 hover:bg-indigo-500 hover:text-white transition duration-300 px-8 py-3 rounded-full shadow-xl font-semibold flex items-center gap-2"
+            class="bg-white text-indigo-500 hover:bg-indigo-500 hover:text-white transition duration-300 px-8 py-3 rounded-full font-semibold flex items-center gap-2"
           >
             <v-icon icon="mdi-video" />
             {{ loading && uploadType === "video" ? "Enviando..." : "Enviar Vídeo" }}
@@ -46,25 +51,28 @@
           />
         </div>
 
-        <!-- Preview -->
-        <div v-if="previewUrl" class="mt-6">
-          <p class="text-white mb-2">Pré-visualização:</p>
-          <img
-            v-if="uploadType === 'image'"
-            :src="previewUrl"
-            class="max-w-xs mx-auto rounded shadow-lg"
-          />
-          <video v-else controls class="max-w-xs mx-auto rounded shadow-lg">
-            <source :src="previewUrl" />
-          </video>
-        </div>
-
-        <!-- Link enviado -->
-        <div v-if="uploadedUrl" class="mt-6 text-white text-sm">
-          <p>Arquivo enviado com sucesso 🎉:</p>
-          <a :href="uploadedUrl" class="underline break-words" target="_blank">{{
-            uploadedUrl
-          }}</a>
+        <!-- Modal de Preview -->
+        <div
+          v-if="dialog"
+          class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50"
+          @click.self="dialog = false"
+        >
+          <div
+            class="bg-gradient-to-br from-purple-500 via-pink-400 to-red-300 p-6 rounded-lg shadow-2xl max-w-sm w-full text-center animate-bouquet"
+          >
+            <img
+              v-if="uploadType === 'image'"
+              :src="previewUrl"
+              alt="Preview da imagem"
+              class="rounded-lg mb-4 max-h-[70vh] mx-auto"
+            />
+            <p class="text-white text-2xl font-vibes leading-snug">
+              Obrigado, iremos guardar essa memória no coração
+            </p>
+            <p class="text-white text-sm mt-2 font-vibes">
+              Fique à vontade para mandar mais lembranças
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -72,7 +80,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, nextTick } from "vue";
 
 const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
@@ -82,9 +90,12 @@ const loading = ref(false);
 const uploadType = ref<"image" | "video" | null>(null);
 const uploadedUrl = ref<string | null>(null);
 const previewUrl = ref<string | null>(null);
+const dialog = ref(false);
 
-const selectFile = (type: "image" | "video") => {
+const selectFile = async (type: "image" | "video") => {
   uploadType.value = type;
+  await nextTick();
+  fileInput.value!.value = "";
   fileInput.value?.click();
 };
 
@@ -110,6 +121,8 @@ const handleUpload = async (e: Event) => {
 
     const data = await res.json();
     uploadedUrl.value = data.secure_url;
+    dialog.value = true;
+    previewUrl.value = data.secure_url;
   } catch (err) {
     alert("Erro ao enviar arquivo 😢");
   } finally {
@@ -125,6 +138,10 @@ const handleUpload = async (e: Event) => {
 .animate-bg {
   background-size: 400% 400%;
   animation: animateBg 10s ease infinite;
+}
+
+.titulo {
+  line-height: 2 !important;
 }
 
 @keyframes animateBg {
