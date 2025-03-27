@@ -88,8 +88,8 @@ const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
 const fileInput = ref<HTMLInputElement | null>(null);
 const loading = ref(false);
 const uploadType = ref<"image" | "video" | null>(null);
-const uploadedUrl = ref<string | null>(null);
-const previewUrl = ref<string | null>(null);
+const uploadedUrl = ref<string>();
+const previewUrl = ref<string>();
 const dialog = ref(false);
 
 const selectFile = async (type: "image" | "video") => {
